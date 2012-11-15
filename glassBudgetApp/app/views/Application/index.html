@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Sistema Glass Budget</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/reset.css'}">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/structure.css'}">
+  </head>
+
+  <body>
+    <form class="box login" action="@{Application.logar}">
+	    <fieldset class="boxBody">
+	      <label>Login</label>
+	      <input type="text" tabindex="1" placeholder="nome de usuário" name="login" required>
+	      <label>Senha</label>
+	      <input type="password" tabindex="2" name="senha" required>
+	    </fieldset>
+	    <footer>
+	      <input type="submit" class="btnLogin" value="Login" tabindex="4">
+	    </footer>
+    </form>
+    <footer id="main">
+      Sistema Glass Budget | AVitrine Vidros
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+#{extends 'main.html' /}
+#{set title: 'Realizar Pedido' /}
+    <script>
+      function exibirPreco(t) {
+        document.getElementById("getPreco").innerHTML="Preço por m²: R$ "+t+"0";
+      }
+    </script>
+
+<form action="" method="GET">
+	<table class="form">
+	  <th><td><br><h2 align="center">Informações do Cliente</h2></td><th>
+		<tr>
+			<th>Nome:</th>
+			<td><input class="inp-text" name="nome" id="nome" type="text" size="30"/></td>
+		</tr>
+
+    <tr>
+			<th>CPF_CNPJ:</th>
+			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnj" type="text" size="30" maxlength="14"/></td>
+		</tr>    
+   
+	  <th><td><br><h2 align="center">Características do Produto</h2></td><th>
+    
+  	<tr>
+      <th>Nome:</th>
+			<td><input class="inp-text" name="cpfcnpj" id="cpfcnj" type="text" size="30" maxlength="14"/></td>
+  	</tr>
+    
+    <th><td><br><h4>Dimensões do Vidro</h4></td></th>
+    <tr>
+			<th>Altura:</th>
+			<td>
+			  <input class="end-uf" name="altura" id="altura" type="text" size="30"/>
+			  Largura: 
+			  <input class="end-uf" name="largura" id="largura" type="text" size="30"/>
+			</td>
+		</tr>
+    <th><td><br><h4>Tipo de material a ser utilizado</h4></td></th>
+		<tr>
+		  <th>Tipo de material: </th>
+			<td>
+			
+			<select name="lstMateriais" id="lstMateriais">
+			#{list items: list, as: 't'}
+			    <option  onclick="exibirPreco('${t.getPreco()}')" >${t.getNome()}</option>
+      #{/list}
+      </select>
+			
+			  
+			  <span id = "getPreco"></span>
+		  </td>
+		</tr>
+    <th><td><hr>Total a pagar: R$ 00,00</td></th>
+		<tr>
+		<td class="submit-button-right" colspan="2"><br><br><input class="submit-text" type="submit" value="Realizar Pedido"/></td>
+		</tr>
+	</table>
+</form>
