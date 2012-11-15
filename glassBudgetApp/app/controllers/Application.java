@@ -57,8 +57,6 @@ public class Application extends Controller {
 			session.put("login", f);// o segundo parametro pode ser um objeto
 									// para por exe. saber quem está logado.
 									// Cria uma classe Usuário
-			// System.out.println(c.getLogin());
-			// System.out.println(c.getSenha());
 			telaPrincipal();
 		} else {
 			index();
