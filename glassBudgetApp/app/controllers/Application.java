@@ -88,11 +88,6 @@ public class Application extends Controller {
 		render(c);
 	}
 
-	public static void cadastroProduto() {
-		Funcionario c = f;
-		render(c);
-	}
-
 	public static void telaPrincipal() {
 		Funcionario c = f;
 		render(c);

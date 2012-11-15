@@ -9,6 +9,12 @@
 	  #{get 'moreStyles' /}
     <link rel="shortcut icon" type="image/ico" href="@{'/public/images/hexagon.ico'}">
     <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script>
+    	function curr() {
+    		
+    	}
+    
+    </script>
     #{get 'moreScripts' /}
   </head>
   <body>
@@ -32,13 +38,12 @@
 				  <li><a class="current" href="@{Application.telaPrincipal}">Home</a></li>
 				  <li><a href="@{Application.realizarPedido}">Realizar Pedido</a></li>
 				  <li><a href="@{Application.cadastroCliente}">Cadastrar Cliente</a></li>
-				  <li><a href="#">Cadastrar Conta</a></li>
 				  <li><a href="#">Buscar Pedidos</a></li>
-				  <li><a href="#">Contato</a></li>
+				  <li><a href="#">Cadastrar Conta</a></li>
 			  </ul>
 			
 			  <div id="pitch">	
-				  <p>#{get 'title' /}</p>
+				  <p class = "title">#{get 'title' /}</p>
 			  </div>
 		  </div>
 	  </div>

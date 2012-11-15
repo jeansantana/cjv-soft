@@ -1,9 +1,12 @@
 #{extends 'main.html' /}
 #{set title: 'Realizar Pedido' /}
     <script>
-      function exibirPreco(t) {
-        document.getElementById("getPreco").innerHTML="Preço por m²: R$ "+t+"0";
+      function exibirPreco(t, a, l) {
+        document.getElementById("getPreco").innerHTML="Preço por m²: R$ " + t + "0";
+        var v = parseFloat(a) * parseFloat(l) * parseFloat(t);
+  	  	document.getElementById("total").innerHTML="Total a pagar: R$ " + total + "0";
       }
+      
     </script>
 
 <form action="" method="GET">
@@ -42,7 +45,7 @@
 			
 			<select name="lstMateriais" id="lstMateriais">
 			#{list items: list, as: 't'}
-			    <option  onclick="exibirPreco('${t.getPreco()}')" >${t.getNome()}</option>
+			    <option  onclick="exibirPreco('${t.getPreco()}', largura, altura)" >${t.getNome()}</option>
       #{/list}
       </select>
 			
@@ -50,7 +53,7 @@
 			  <span id = "getPreco"></span>
 		  </td>
 		</tr>
-    <th><td><hr>Total a pagar: R$ 00,00</td></th>
+    <th><td><hr id = "total"></hr></td></th>
 		<tr>
 		<td class="submit-button-right" colspan="2"><br><br><input class="submit-text" type="submit" value="Realizar Pedido"/></td>
 		</tr>
