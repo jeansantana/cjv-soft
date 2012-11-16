@@ -14,12 +14,12 @@ table.form label {
 }
 /**Altera o tamanho das caixas de texto*/
 table.form input { 
-  width: 500px;
+  width: 550px;
   height: 20px;
 }
 
 table.form input.end-cidade { 
-  width: 250px;
+  width: 204px;
   height: 20px;
   border: 1px solid #c8e152;
   padding: 3px;
@@ -27,8 +27,18 @@ table.form input.end-cidade {
   color: #000000; 
 }
 
+table.form input.logra { 
+  width: 433px;
+  height: 20px;
+  border: 1px solid #c8e152;
+  padding: 3px;
+  background-color: #FFFFFF; 
+  color: #000000; 
+}
+
+
 table.form input.end-uf { 
-  width: 50px;
+  width: 80px;
   height: 20px;
   border: 1px solid #c8e152;
   padding: 3px;

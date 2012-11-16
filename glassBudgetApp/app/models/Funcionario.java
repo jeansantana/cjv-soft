@@ -3,13 +3,13 @@ package models;
 public class Funcionario {
 	private String codfuncionario;
 	private String login;
-	private String nomefuncionario;
+	private String nome;
 	private String senha;
 	
 	public Funcionario(String codfuncionario, String login, String nomefuncionario, String senha) {
 		this.setCodfuncionario(codfuncionario);
 		this.setLogin(login);
-		this.setNomefuncionario(nomefuncionario);
+		this.setNome(nomefuncionario);
 		this.setSenha(senha);
 	}
 
@@ -17,7 +17,7 @@ public class Funcionario {
 	public Funcionario(String login, String nomefuncionario, String senha) {
 		super();
 		this.login = login;
-		this.nomefuncionario = nomefuncionario;
+		this.nome = nomefuncionario;
 		this.senha = senha;
 	}
 
@@ -39,12 +39,12 @@ public class Funcionario {
 		this.login = login;
 	}
 
-	public String getNomefuncionario() {
-		return nomefuncionario;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomefuncionario(String nomefuncionario) {
-		this.nomefuncionario = nomefuncionario;
+	public void setNome(String nomefuncionario) {
+		this.nome = nomefuncionario;
 	}
 
 	public String getSenha() {
@@ -57,7 +57,7 @@ public class Funcionario {
 	
 	@Override
 	public String toString() {
-		String a = "Funcionario{\n"+codfuncionario+"\n"+nomefuncionario+"\n"+login+"\n"+senha+"\n}\n";
+		String a = "Funcionario{\n"+codfuncionario+"\n"+nome+"\n"+login+"\n"+senha+"\n}\n";
 		return a;
 	}	
 }

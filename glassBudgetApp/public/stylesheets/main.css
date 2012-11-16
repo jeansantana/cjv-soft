@@ -29,9 +29,14 @@ h4 { margin: 0 0 10px; font-size: 1.2em; }
 img { border: 0; }
 .x { clear: both; }
 
+.imgBusca {
+	width: 15px;
+	height: 15px;
+}
+
 #content { margin: 0 auto; width: 960px;}
 #header { height: 350px; }
-#top { padding: 13px 0 0; margin: 0 0 60px; color: #fff; height: 31px; }
+#top { padding: 13px 0 0; margin: 0 0 60px; color: #fff; height: 31px; font-size: 18px}
 #pitch { clear: left; float: left; width: 610px; font-size: 1.2em; padding: 20px 0 0; color: #59690C; margin: 0 0 60px; }
 
 #menu { float: right; margin: 10px 15px 0 0; }

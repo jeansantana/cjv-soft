@@ -1,38 +1,23 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import models.*;
-
-import models.*;
+import models.Cliente;
+import models.Funcionario;
+import models.TipoVidro;
+import play.mvc.Before;
+import play.mvc.Controller;
+import daos.ClienteDAO;
+import daos.ConnectPostegreSQL;
 
 public class Application extends Controller {
 
-	private static Connection con;
-	private static Statement comando;
-	private static Funcionario f;
-
-	// conecta ao banco
-	private static void conectar() throws SQLException, java.sql.SQLException {
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-		}
-
-		con = DriverManager.getConnection(
-				"jdbc:postgresql://localhost:5432/glassBudget", "jeansilva",
-				"123");
-		comando = con.createStatement();
-	}
-
+	private static Funcionario f;	
+	private static Cliente cliente;
+	
 	// uso do sessions play framework!
 	@Before(unless = { "index", "logar", "telaLogin" })
 	// nenhuma outra página além dessas poderia ser aberta enquanto não abrisse
@@ -48,12 +33,11 @@ public class Application extends Controller {
 	}
 
 	public static void logar(String login, String senha) throws SQLException {
-		conectar();
-		ResultSet res = comando.executeQuery("select * from funcionario where login = '" + login + "' and senha='" + senha + "'");
-		System.out.println("Aqui: " + login);
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery("select * from funcionario where login = '" + login + "' and senha='" + senha + "'");
 		if (res.next()) {
 			String nome = res.getString("nomefuncionario");
-			f = new Funcionario(nome, login, senha);
+			f = new Funcionario(login, nome, senha);
 			session.put("login", f);// o segundo parametro pode ser um objeto
 									// para por exe. saber quem está logado.
 									// Cria uma classe Usuário
@@ -63,21 +47,42 @@ public class Application extends Controller {
 		}
 	}
 	
-	public static void cadastrarCliente(String nome, String cidade, String uf, String bairro, String telefone, 
-			String num, String tipo, String cpfcnpj) throws SQLException {
-		conectar();
-		String endereco = cidade + "-" + uf + " " + bairro + " n"+ num;
+	public static void cadastrarCliente(String nome, String cep, String logra, String cidade, String uf, 
+			String bairro, String telefone, String num, String tipo, String cpfcnpj) throws SQLException {
+		String endereco = logra + " Nº " + num + ". Bairro: " + bairro + ". " + cidade + "-" + uf + ". CEP: " + cep;
 		if (tipo.equals("Pessoa Física")) {
 			tipo = "física";
 		} else {
 			tipo = "jurídica";
 		}
-		
-		comando.executeUpdate("insert into cliente (nome, endereco, cpf_cnpj, telefone, tipo) " +
-				"values ('"+ nome +"', '"+ endereco +"', '"+ cpfcnpj +"', '"+ telefone +"', '"+ tipo +"')");
+		Cliente cliente = new Cliente(nome, endereco, cpfcnpj, telefone, tipo);
+		ClienteDAO con = new ClienteDAO();
+		con.save(cliente);
 		telaPrincipal();
 	}
+	
+	public static Cliente buscarCliente(String cpfcnpj) throws SQLException {
+		ClienteDAO client = new ClienteDAO();
+		System.out.println("Aqui:");
+		System.out.println(client.search(cpfcnpj));
+		return client.search(cpfcnpj);
+	}
 
+	public static void criarContaFuncionario() {
+		Funcionario c = f;
+		render(c);
+	}
+	
+	public static void gerenciamento() {
+		Funcionario c = f;
+		render(c);
+	}
+	
+	public static void buscarPedidos() {
+		Funcionario c = f;
+		render(c);
+	}
+	
 	public static void logout() {
 		session.remove("login");
 		index();
@@ -95,15 +100,15 @@ public class Application extends Controller {
 	
 	public static void realizarPedido() throws SQLException {
 		Funcionario c = f;
-		
-		conectar();
-		ResultSet res = comando.executeQuery("select * from tipodevidro");
+		Cliente cl = cliente;
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery("select * from tipodevidro");
 		List<TipoVidro> list = new ArrayList<TipoVidro>();
 		while(res.next()) {
 			TipoVidro t = new TipoVidro(res.getString("nome"), Double.parseDouble(res.getString("espessura")), Double.parseDouble(res.getString("preco")), res.getString("descricao"));
 			list.add(t);
 		}
 		
-		render(c, list);
+		render(c, list, cl);
 	}
 }

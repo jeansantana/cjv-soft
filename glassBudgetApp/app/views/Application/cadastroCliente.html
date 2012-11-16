@@ -1,17 +1,41 @@
 #{extends 'main.html' /}
 #{set title: 'Cadastrar Cliente' /}
-<form action="@{Application.cadastrarCliente()}" method="GET">
+
+<script>
+$(document).ready(function(){
+  $("#tipo").click(function(){
+	  var idx = document.formCliente.tipo.selectedIndex; 
+	  if (document.formCliente.tipo.options[idx].text == "Pessoa Física")
+		  $("#ident").text("CPF: ");
+	  else
+		  $("#ident").text("CNPJ: ");
+  });
+});
+</script>
+
+<form name="formCliente" action="@{Application.cadastrarCliente()}" method="GET">
 	<table class="form">
 	
-		<tr>
-			<th>Nome:</th>
-			<td><input class="inp-text" name="nome" id="nome" type="text" size="30"/></td>
-		</tr>
+	<tr>
+		<th>Nome:</th>
+		<td><input class="inp-text" name="nome" id="nome" type="text" size="30"/></td>
+	</tr>
+	
+	<tr>
+		<th>Logradouro:</th>
+		<td>
+			<input class="logra" name="logra" id="logra" type="text" size="30"/>
+			Nº: 
+			<input class="end-uf" name="num" id="num" type="text" size="30"/>
+		</td>
+		
+	</tr>
 		
   	<tr>
 			<th>Cidade:</th>
 			<td>
 			  <input class="end-cidade" name="cidade" id="cidade" type="text" size="30"/>
+			  Bairro: <input class="end-cidade" name="bairro" id="bairro" type="text" size="30"/>
         UF:
         <select name="uf" id="uf">
 					<option> AC </option>
@@ -43,15 +67,12 @@
           <option> TO </option>
 	  		</select>
       </td>
+		
 		</tr>
-
-    <tr>
-			<th>Bairro:</th>
-			<td>
-			  <input class="end-cidade" name="bairro" id="bairro" type="text" size="30"/>
-			  No: 
-			  <input class="end-uf" name="num" id="num" type="text" size="30"/>
-			</td>
+		
+		<tr>
+			<th>CEP:</th>
+			<td><input class="end-cidade" name="cep" id="cep" type="text" size="30" /></td>
 		</tr>
 
 		<tr>
@@ -70,7 +91,7 @@
   		</tr>
   
 		<tr>
-			<th>CPF_CNPJ:</th>
+			<th id = "ident">CPF/CNPJ:</th>
 			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnj" type="text" size="30" maxlength="14"/></td>
 		</tr>
 		<tr>
