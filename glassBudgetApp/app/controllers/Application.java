@@ -61,11 +61,11 @@ public class Application extends Controller {
 		telaPrincipal();
 	}
 	
-	public static Cliente buscarCliente(String cpfcnpj) throws SQLException {
+	public static void buscarCliente(String cpfcnpj) throws SQLException {
 		ClienteDAO client = new ClienteDAO();
-		System.out.println("Aqui:");
-		System.out.println(client.search(cpfcnpj));
-		return client.search(cpfcnpj);
+		cliente = client.search(cpfcnpj);
+		System.out.println(cliente);
+		realizarPedidoInfo();
 	}
 
 	public static void criarContaFuncionario() {
@@ -98,7 +98,7 @@ public class Application extends Controller {
 		render(c);
 	}
 	
-	public static void realizarPedido() throws SQLException {
+	public static void realizarPedidoInfo() throws SQLException {
 		Funcionario c = f;
 		Cliente cl = cliente;
 		ConnectPostegreSQL.conectar();
@@ -108,7 +108,19 @@ public class Application extends Controller {
 			TipoVidro t = new TipoVidro(res.getString("nome"), Double.parseDouble(res.getString("espessura")), Double.parseDouble(res.getString("preco")), res.getString("descricao"));
 			list.add(t);
 		}
-		
 		render(c, list, cl);
+	}
+	
+	public static void realizarPedido() throws SQLException {
+		Funcionario c = f;
+		//Cliente cl = cliente;
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery("select * from tipodevidro");
+		List<TipoVidro> list = new ArrayList<TipoVidro>();
+		while(res.next()) {
+			TipoVidro t = new TipoVidro(res.getString("nome"), Double.parseDouble(res.getString("espessura")), Double.parseDouble(res.getString("preco")), res.getString("descricao"));
+			list.add(t);
+		}
+		render(c, list);
 	}
 }

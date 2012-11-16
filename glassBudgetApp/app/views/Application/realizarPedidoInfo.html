@@ -31,27 +31,23 @@
 				+ formataMoeda(t, 2, '.', ',', 'R$');
 		document.getElementById("total").innerHTML = "<h3><b>Total a pagar: </b>"
 				+ formataMoeda(precoTotal, 2, '.', ',', 'R$') + "</h3>";
-	}	
+	}
 </script>
 
-<form name="formInfoCliente" action="@{Application.buscarCliente}" method="GET">
+<form name="formPedido" action="" method="GET">
 	<table class="form">
-		<th>
-		<td><br>
-			<h2 align="center">Informações do Cliente</h2></td>
-		</th>
-		
 		<tr>
-			<th>CPF/CNPJ:</th>
-			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj"
-				type="text" size="30" maxlength="14" />
-				<!-- <a href="#""><img type="submit" class="imgBusca" src="@{'/public/images/buscar.png'}"></a>-->
-				<input id="busca" class="submit-text" type="submit" value="Busca" />
+			<th></th>
+			<td><br>
+				<h2 align="center">Informações do Cliente</h2>
+				<span id = "info"><b>Nome: </b> 
+					${cl.getNome()}<br> <b>Endereço: </b> ${cl.getEndereco()}<br>
+					#{if cl.getTipo() == "física"} <b>cpf: </b> ${cl.getCpf_cnpj()} <br>
+					#{/if}
+				</span>
 			</td>
 		</tr>
-</form>
 
-<form name="formPedido" action="" method="GET">
 		<th>
 		<td><br>
 			<h2 align="center">Características do Produto</h2></td>
