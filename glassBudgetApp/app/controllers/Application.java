@@ -50,10 +50,10 @@ public class Application extends Controller {
 	public static void cadastrarCliente(String nome, String cep, String logra, String cidade, String uf, 
 			String bairro, String telefone, String num, String tipo, String cpfcnpj) throws SQLException {
 		String endereco = logra + " NÂº " + num + ". Bairro: " + bairro + ". " + cidade + "-" + uf + ". CEP: " + cep;
-		if (tipo.equals("Pessoa FÃ­sica")) {
-			tipo = "fÃ­sica";
+		if (tipo.equals("Pessoa Física")) {
+			tipo = "física";
 		} else {
-			tipo = "jurÃ­dica";
+			tipo = "jurídica";
 		}
 		Cliente cliente = new Cliente(nome, endereco, cpfcnpj, telefone, tipo);
 		ClienteDAO con = new ClienteDAO();

@@ -5,21 +5,24 @@ public class Produto {
 	private String nomeproduto;
 	private double altura;
 	private double largura;
+	private int codtipovidro;
 	
-	public Produto(String codproduto, String nomeproduto, double altura, double largura) {
+	public Produto(String codproduto, String nomeproduto, double altura, double largura, int codtipovidro) {
 		this.setCodproduto(codproduto);
 		this.setNomeproduto(nomeproduto);
 		this.setAltura(altura);
 		this.setLargura(largura);
+		this.setCodtipovidro(codtipovidro);
 	}
 	
 	public Produto(){}
 
-	public Produto(String nomeproduto, double altura, double largura) {
+	public Produto(String nomeproduto, double altura, double largura, int codtipovidro) {
 		super();
 		this.nomeproduto = nomeproduto;
 		this.altura = altura;
 		this.largura = largura;
+		this.codtipovidro = codtipovidro;
 	}
 
 	public String getCodproduto() {
@@ -54,9 +57,17 @@ public class Produto {
 		this.largura = largura;
 	}
 	
+	public int getCodtipovidro() {
+		return codtipovidro;
+	}
+
+	public void setCodtipovidro(int codtipovidro) {
+		this.codtipovidro = codtipovidro;
+	}
+	
 	@Override
 	public String toString() {
-		String a = "Produto{\n"+codproduto+"\n"+nomeproduto+"\n"+altura+"\n"+codproduto+"\n}\n";
+		String a = "Produto{\n"+codproduto+"\n"+nomeproduto+"\n"+altura+"\n"+codproduto+"\n"+codtipovidro+"}\n";
 		return a;
 	}
 }
