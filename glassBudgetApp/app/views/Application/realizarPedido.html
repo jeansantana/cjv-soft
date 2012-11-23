@@ -30,7 +30,7 @@
 		document.getElementById("getPreco").innerHTML = "<b>Preço por m²:</b>"
 				+ formataMoeda(t, 2, '.', ',', 'R$');
 		document.getElementById("total").innerHTML = "<h3><b>Total a pagar: </b>"
-				+ formataMoeda(precoTotal, 2, '.', ',', 'R$') + "</h3>";
+				+ formataMoeda(precoTotal, 2, ',', '.', 'R$') + "</h3>";
 	}	
 </script>
 
@@ -47,11 +47,18 @@
 				type="text" size="30" maxlength="14" />
 				<!-- <a href="#""><img type="submit" class="imgBusca" src="@{'/public/images/buscar.png'}"></a>-->
 				<input id="busca" class="submit-text" type="submit" value="Busca" />
+				
+				#{ifErrors} 
+					#{errors}
+						<span style="color: red">${error}</span>
+						<br>
+					#{/errors} 
+				#{/ifErrors}	
 			</td>
 		</tr>
 </form>
 
-<form name="formPedido" action="" method="GET">
+<form name="formPedido" method="GET">
 		<th>
 		<td><br>
 			<h2 align="center">Características do Produto</h2></td>
@@ -76,6 +83,7 @@
 		<td><br>
 			<h4>Tipo de material a ser utilizado</h4></td>
 		</th>
+		
 		<tr>
 			<th>Tipo de material:</th>
 			<td><select name="lstMateriais" id="lstMateriais">
@@ -84,12 +92,17 @@
 					#{/list}
 			</select> <span id="getPreco"></span></td>
 		</tr>
+		
 		<th>
-		<td><hr id="total"></hr></td>
+			<td>
+				<hr id="total"></hr>
+			</td>
 		</th>
+		
 		<tr>
 			<td class="submit-button-right" colspan="2"><br> <br>
-				<input class="submit-text" type="submit" value="Realizar Pedido" /></td>
+				<input class="submit-text" type="submit" value="Realizar Pedido" />
+				<input class="submit-text" type="submit" value="Comfirmar Pedido" /></td>
 		</tr>
 	</table>
 </form>

@@ -16,7 +16,13 @@
 	      <input type="password" tabindex="2" name="senha" required>
 	    </fieldset>
 	    <footer>
-	      <input type="submit" class="btnLogin" value="Login" tabindex="4">
+	    	#{ifErrors} 
+				#{errors}
+					<span style="color: red">${error}</span>
+					<br>
+				#{/errors} 
+			#{/ifErrors}
+		    <input type="submit" class="btnLogin" value="Login" tabindex="4">
 	    </footer>
     </form>
     <footer id="main">

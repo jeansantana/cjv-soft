@@ -42,8 +42,8 @@
 				<h2 align="center">Informações do Cliente</h2>
 				<span id = "info"><b>Nome: </b> 
 					${cl.getNome()}<br> <b>Endereço: </b> ${cl.getEndereco()}<br>
-					#{if cl.getTipo() == "física"} <b>cpf: </b> ${cl.getCpf_cnpj()} <br>
-					#{/if}
+					#{if cl.getTipo() == "física"} <b>CPF: </b> ${cl.getCpf_cnpj()} <br>#{/if}
+					#{if cl.getTipo() == "jurídica"} <b>CNPJ: </b> ${cl.getCpf_cnpj()} <br>#{/if}
 				</span>
 			</td>
 		</tr>
@@ -85,7 +85,8 @@
 		</th>
 		<tr>
 			<td class="submit-button-right" colspan="2"><br> <br>
-				<input class="submit-text" type="submit" value="Realizar Pedido" /></td>
+				<input class="submit-text" type="submit" value="Realizar Pedido" />
+				<input class="submit-text" type="submit" value="Comfirmar Pedido" /></td>
 		</tr>
 	</table>
 </form>
