@@ -1,0 +1,120 @@
+#{extends 'main.html' /} #{set title: 'Cadastrar Cliente' /}
+
+<script>
+	$(document).ready(function() {
+		$("#tipo").click(function() {
+			var idx = document.formCliente.tipo.selectedIndex;
+			if (document.formCliente.tipo.options[idx].text == "Pessoa Física") {
+				$("#ident").text("CPF: ");
+			 	$("#cpfcnpj").mask("999.999.999-99");  
+			} else if (document.formCliente.tipo.options[idx].text == "Pessoa Jurídica") {
+				$("#ident").text("CNPJ: ");
+				$("#cpfcnpj").mask("99.999.999/9999-99");  
+			} else {
+				$("#ident").text("CPF/CNPJ: ");
+			}
+		});
+	});
+	
+	jQuery(function($) {
+		$("#telefone").mask("(999) 9999-9999");
+	   	$("#cep").mask("99999-999");
+	});
+	
+</script>
+
+#{ifErrors} 
+	#{errors}
+		<span style="color: red">${error}</span>
+		<br>
+	#{/errors} 
+#{/ifErrors}
+<br>
+<form name="formCliente" action="@{ControllerCliente.cadastrarCliente()}"
+	method="GET">
+	<table class="form">
+
+		<tr>
+			<th>Nome:</th>
+			<td><input class="inp-text" name="nome" id="nome" type="text"
+				size="30" value="${flash.nome}" /></td>
+		</tr>
+
+		<tr>
+			<th>Logradouro:</th>
+			<td><input class="logra" name="logra" id="logra" type="text"
+				size="30" value="${flash.logra}" /> Nº: <input class="end-uf"
+				name="num" id="num" type="text" size="30" value="${flash.num}" /></td>
+
+		</tr>
+
+		<tr>
+			<th>Cidade:</th>
+			<td><input class="end-cidade" name="cidade" id="cidade"
+				type="text" size="30" value="${flash.cidade}" /> Bairro: <input
+				class="end-cidade" name="bairro" id="bairro" type="text" size="30"
+				value="${flash.bairro}" /> UF: <select name="uf" id="uf">
+					<option>-</option>
+					<option>AC</option>
+					<option>AL</option>
+					<option>AP</option>
+					<option>AM</option>
+					<option>BA</option>
+					<option>CE</option>
+					<option>DF</option>
+					<option>ES</option>
+					<option>GO</option>
+					<option>MA</option>
+					<option>MT</option>
+					<option>MS</option>
+					<option>MG</option>
+					<option>PA</option>
+					<option>PB</option>
+					<option>PR</option>
+					<option>PE</option>
+					<option>PI</option>
+					<option>RJ</option>
+					<option>RN</option>
+					<option>RS</option>
+					<option>RO</option>
+					<option>RR</option>
+					<option>SC</option>
+					<option>SP</option>
+					<option>SE</option>
+					<option>TO</option>
+			</select></td>
+
+		</tr>
+
+		<tr>
+			<th>CEP:</th>
+			<td><input class="end-cidade" name="cep" id="cep" type="text"
+				size="30" value="${flash.cep}" /></td>
+		</tr>
+
+		<tr>
+			<th>Telefone:</th>
+			<td><input class="end-cidade" name="telefone" id="telefone"
+				type="text" size="30" value="${flash.telefone}" /></td>
+		</tr>
+
+		<tr>
+			<td>Tipo:</td>
+			<td><select name="tipo" id="tipo" value="${flash.tipo}">
+					<option>Selecione</option>
+					<option>Pessoa Física</option>
+					<option>Pessoa Jurídica</option>
+			</select></td>
+		</tr>
+
+		<tr>
+			<th id="ident">CPF/CNPJ:</th>
+			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj"
+				type="text" size="30" value="${flash.cpfcnpj}" /></td>
+		</tr>
+		<tr>
+			<td class="submit-button-right" colspan="2"><input
+				class="submit-text" type="submit" value="Cadastrar" /></td>
+		</tr>
+	</table>
+</form>
