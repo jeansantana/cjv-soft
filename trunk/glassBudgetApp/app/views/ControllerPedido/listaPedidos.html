@@ -1,0 +1,48 @@
+#{extends 'main.html' /}
+#{set title:'Pedidos' /}
+Lista de Pedidos:
+
+<style type="text/css">
+	table.tbl{
+	  border: 1px solid black;
+	  border-spacing: 0px;
+	  background-color: #FFFFFF;
+	}
+	
+	tr.trStyle {
+		text-align: center;
+		bottom: "middle";
+	}
+	
+	td.tdSt {
+		border: 1px solid black;
+	  	border-spacing: 0px;
+	}
+	
+	td.titlest {
+		background-color: #9AB324;
+		border: 1px solid black;
+		color: black;
+	  	border-spacing: 0px;
+	}
+	
+</style>
+
+<table class="tbl">
+	<tr class="trStyle">
+		<td class="titlest">Nome do Cliente</td>
+		<td class="titlest">Data do Pedido</td>
+		<td class="titlest">Hora do Pedido</td>
+		<td class="titlest">Descição do Produto</td>
+		<td class="titlest">Valor do Pedido</td>
+	</tr>
+	#{list items: list, as: 'p'}
+		<tr class="trStyle">
+			<td class="tdSt"> ${p.getNomeCliente()} </td>
+			<td class="tdSt"> ${p.getDataPedido()} </td>
+			<td class="tdSt"> ${p.getHoraPedido()} </td>
+			<td class="tdSt"> ${p.getNomeProduto()} </td>
+			<td class="tdSt">${p.getValorFormated()}</td>
+		</tr>
+	#{/list}
+</table>

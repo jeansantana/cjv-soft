@@ -52,10 +52,12 @@ public class Application extends Controller {
 		
 			ResultSet res = ConnectPostegreSQL.comando.executeQuery("select * from funcionario where login = '" + login + "' and senha='" + senha + "'");
 			if (res.next()) {
+				int id = Integer.parseInt(res.getString("codfuncionario"));
 				String nome = res.getString("nomefuncionario");
-				f = new Funcionario(login, nome, senha);
+				f = new Funcionario(id, login, nome, senha);
 				ControllerCliente controlCliente = new ControllerCliente(f, cliente);
 				ControllerPedido controlPedido = new ControllerPedido(cliente, f);
+				ControllerMaterial controlMaterial = new ControllerMaterial(f, cliente);
 				session.put("login", f);// o segundo parametro pode ser um objeto
 										// para por exe. saber quem está logado.
 										// Cria uma classe Usuário
@@ -103,7 +105,6 @@ public class Application extends Controller {
 
 	public static void telaPrincipal() {
 		Funcionario c = f;
-		render(c);
 		try {
 			render(c);
 		} catch (Exception e) {

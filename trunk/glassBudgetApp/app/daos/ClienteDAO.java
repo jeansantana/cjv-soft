@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Cliente;
+import models.Pedido;
 
 public class ClienteDAO implements DAOModel<Cliente>{
 	
@@ -40,7 +41,7 @@ public class ClienteDAO implements DAOModel<Cliente>{
 				" endereco = '" + c.getEndereco() + "'," +
 				" telefone = '" + c.getTelefone() + "'," +
 				" tipo = '" + c.getTipo() + "' " +
-				"where cpf_cnpj = '" + c.getCpf_cnpj() + "'";
+				"where cpf_cnpj = '" + c.getCpf_cnpj() + "';";
 		ConnectPostegreSQL.conectar();
 		ConnectPostegreSQL.comando.executeUpdate(sql);
 	}
@@ -51,7 +52,17 @@ public class ClienteDAO implements DAOModel<Cliente>{
 		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
 		Cliente c = null;
 		if (res.next()) 
-			c = new Cliente(res.getString("cod_cliente"), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
+			c = new Cliente(Integer.parseInt(res.getString("cod_cliente")), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
+		return c;
+	}
+	
+	public Cliente find() throws SQLException {
+		String sql = "select * from cliente where cpf_cnpj = '" + c.getCod_cliente() + "';";
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
+		Cliente c = null;
+		if (res.next()) 
+			c = new Cliente(Integer.parseInt(res.getString("cod_cliente")), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
 		return c;
 	}
 	
@@ -62,7 +73,7 @@ public class ClienteDAO implements DAOModel<Cliente>{
 		List<Cliente> list = new ArrayList<Cliente>();
 		
 		while (res.next()) {
-			Cliente c = new Cliente(res.getString("cod_cliente"), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
+			Cliente c = new Cliente(Integer.parseInt(res.getString("cod_cliente")), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
 			list.add(c);
 		}
 		return list;
@@ -75,8 +86,22 @@ public class ClienteDAO implements DAOModel<Cliente>{
 		List<Cliente> list = new ArrayList<Cliente>();
 		
 		while (res.next()) {
-			Cliente c = new Cliente(res.getString("cod_cliente"), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
+			Cliente c = new Cliente(Integer.parseInt(res.getString("cod_cliente")), res.getString("nome"), res.getString("endereco"), res.getString("cpf_cnpj"), res.getString("telefone"), res.getString("tipo"));
 			list.add(c);
+		}
+		return list;
+	}
+	
+	public List<Pedido> findPedidos() throws SQLException {
+		String sql = "select * from pedido where cod_cliente = " + c.getCod_cliente() + ";";
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
+		List<Pedido> list = new ArrayList<Pedido>();
+		
+		while (res.next()) {
+			char s = res.getString("status").charAt(0);
+			Pedido p = new Pedido(res.getString("data_pedido"), res.getString("horapedido"), Integer.parseInt(res.getString("cod_cliente")), Integer.parseInt(res.getString("codfuncionario")), s);
+			list.add(p);
 		}
 		return list;
 	}

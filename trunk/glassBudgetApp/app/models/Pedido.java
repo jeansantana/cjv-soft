@@ -1,5 +1,8 @@
 package models;
 
+import daos.PedidoDAO;
+import utils.Utils;
+
 public class Pedido {
 	private String data_pedido;
 	private String horapedido;
@@ -16,6 +19,14 @@ public class Pedido {
 		this.horapedido = horapedido;
 		this.cod_cliente = cod_cliente;
 		this.codfuncionario = codfuncionario;
+	}
+	
+	public Pedido(int cod_cliente, int codfuncionario, char status) {
+		data_pedido = Utils.getDate();
+		horapedido = Utils.getHour();
+		this.cod_cliente = cod_cliente;
+		this.codfuncionario = codfuncionario;
+		this.status = status;
 	}
 
 	public char getStatus() {

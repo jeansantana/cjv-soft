@@ -1,0 +1,40 @@
+#{extends 'main.html' /} 
+#{set title: 'Cadastrar Material' /}
+
+<form id="formTipoDeVidro" name="formTipoDeVidro" action="@{ControllerMaterial.cadastrarMaterial()}" method="GET">
+	
+		<table class="form">
+			<tr>
+				<th>Nome: </th>
+				<td>
+					<input class="inp-text" id="nometipo" name="nometipo" type="text" />
+				</td>
+			</tr>
+			
+			<tr>
+				<th>Espessura em mm: </th>
+				<td>
+					<input class="end-uf" id="espessura" name="espessura" type="text" />
+				</td>
+			</tr>
+			
+			<tr>
+				<th>Preço por m²: </th>
+				<td>
+					<input class="end-uf" id="preco" name="preco" type="text" />
+				</td> 
+			</tr>
+			
+			<tr>
+				<th>Descrição: </th>
+				<td>
+					<textarea class="inp-text" id="desc" name="desc"></textarea>
+				</td> 
+			</tr>
+			
+			<tr>
+				<td class="submit-button-right" colspan="2"><br><input id="save" class="submit-text" type="submit" value="Salvar" /></td>
+			</tr>
+			
+		</table>
+</form>

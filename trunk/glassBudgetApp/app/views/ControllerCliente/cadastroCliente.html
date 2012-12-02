@@ -1,4 +1,5 @@
-#{extends 'main.html' /} #{set title: 'Cadastrar Cliente' /}
+#{extends 'main.html' /} 
+#{set title: 'Cadastrar Cliente' /}
 
 <script>
 	$(document).ready(function() {
@@ -30,6 +31,7 @@
 	#{/errors} 
 #{/ifErrors}
 <br>
+<span align="center">
 <form name="formCliente" action="@{ControllerCliente.cadastrarCliente()}"
 	method="GET">
 	<table class="form">
@@ -118,3 +120,4 @@
 		</tr>
 	</table>
 </form>
+</span>

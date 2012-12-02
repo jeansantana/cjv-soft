@@ -57,7 +57,11 @@ public class ControllerCliente extends Controller {
 			ClienteDAO con = new ClienteDAO(c);
 			con.save();
 			cliente = c;
-			ControllerPedido controlPedido = new ControllerPedido(c, f);
+			
+			ClienteDAO client = new ClienteDAO();
+			cliente = client.find(cpfcnpj);
+			
+			ControllerPedido controlPedido = new ControllerPedido(cliente, f);
 			ControllerPedido.realizarPedidoInfo();
 		}
 	}

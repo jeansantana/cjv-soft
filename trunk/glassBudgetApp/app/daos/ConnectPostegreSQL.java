@@ -17,12 +17,12 @@ public class ConnectPostegreSQL {
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		Connection con = DriverManager.getConnection(
 				"jdbc:postgresql://localhost:5432/glass_budget", "jeansilva",
 				"123");
 		comando = con.createStatement();
-	}
-	
+	}	
 }

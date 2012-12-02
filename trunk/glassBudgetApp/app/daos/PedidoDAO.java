@@ -5,43 +5,81 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.ModelBuscaPedidos;
 import models.Pedido;
 
-public class PedidoDAO {
+public class PedidoDAO implements DAOModel<Pedido>{
 	
-	public void save(Pedido c) throws SQLException {
+	private Pedido p;
+	
+	public PedidoDAO(Pedido p) {
+		this.p = p;
+	}
+	
+	public PedidoDAO() {}
+	
+	public void save() throws SQLException {
 		String sql = "insert into pedido values ('" +
-				c.getData_pedido() + "', '" +
-				c.getHorapedido() + "', '" +
-				c.getCod_cliente() + "', '" +
-				c.getCodfuncionario() + "', '" +
-				c.getStatus() + "');";
+				p.getData_pedido() + "', '" +
+				p.getHorapedido() + "', '" +
+				p.getCod_cliente() + "', '" +
+				p.getCodfuncionario() + "', '" +
+				p.getStatus() + "');";
 		ConnectPostegreSQL.conectar();
 		ConnectPostegreSQL.comando.executeUpdate(sql);
 	}
 	
-	public void delete(Pedido c) throws SQLException {
-		String sql = "delete from pedido where data_pedido = '" + c.getData_pedido() + "' and " +
-		"horapedido = '" + c.getHorapedido() + "' and " +
-		"cod_cliente = '" + c.getCod_cliente() + "';";
+	public void delete() throws SQLException {
+		String sql = "delete from pedido where data_pedido = '" + p.getData_pedido() + "' and " +
+		"horapedido = '" + p.getHorapedido() + "' and " +
+		"cod_cliente = '" + p.getCod_cliente() + "';";
 		ConnectPostegreSQL.conectar();
 		ConnectPostegreSQL.comando.executeUpdate(sql);
 	}
 	
-	public Pedido search(String data_pedido, String horapedido, String cod_cliente) throws SQLException {
-		String sql = "select * from pedido where data_pedido = '" + data_pedido + "' and horapedido = '" + horapedido + "' and cod_cliente = '" + cod_cliente + "';";
+	public void update() throws SQLException {
+		String sql = "update pedido set codfuncionario = " +
+				+ p.getCodfuncionario() +", status = '" +
+				p.getStatus() + "' " +		
+				"where data_pedido = '" + p.getData_pedido() + "' and " +
+				"horapedido = '" + p.getHorapedido() + "' and " +
+				"cod_cliente = '" + p.getCod_cliente() + "';";
+		ConnectPostegreSQL.conectar();
+		ConnectPostegreSQL.comando.executeUpdate(sql);
+	}
+	
+	public Pedido find() throws SQLException {
+		String sql = "select * from pedido where data_pedido = '" + 
+				p.getData_pedido() + "' and horapedido = '" + 
+				p.getHorapedido() + "' and cod_cliente = '" + 
+				p.getCod_cliente() + "';";
 		ConnectPostegreSQL.conectar();
 		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
-		Pedido c = null;
+		Pedido p = null;
 		if (res.next()) {
 			char s = res.getString("status").charAt(0);
-			c = new Pedido(res.getString("data_pedido"), res.getString("horapedido"), Integer.parseInt(res.getString("cod_cliente")), Integer.parseInt(res.getString("codfuncionario")), s);
+			p = new Pedido(res.getString("data_pedido"), res.getString("horapedido"), Integer.parseInt(res.getString("cod_cliente")), Integer.parseInt(res.getString("codfuncionario")), s);
 		}
-		return c;
+		return p;
 	}
 	
-	public List<Pedido> searchForFuncionario(String cod_cliente) throws SQLException {
-		String sql = "select * from pedido where cod_cliente ~* '" + cod_cliente + "';";
+	public Pedido find(String data_pedido, String horapedido, int cod_cliente) throws SQLException {
+		String sql = "select * from pedido where data_pedido = '" + 
+				data_pedido + "' and horapedido = '" + 
+				horapedido + "' and cod_cliente = '" + 
+				cod_cliente + "';";
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
+		Pedido p = null;
+		if (res.next()) {
+			char s = res.getString("status").charAt(0);
+			p = new Pedido(res.getString("data_pedido"), res.getString("horapedido"), Integer.parseInt(res.getString("cod_cliente")), Integer.parseInt(res.getString("codfuncionario")), s);
+		}
+		return p;
+	}
+	
+	public List<Pedido> findAll() throws SQLException {
+		String sql = "select * from pedido;";
 		ConnectPostegreSQL.conectar();
 		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
 		List<Pedido> list = new ArrayList<Pedido>();
@@ -54,18 +92,52 @@ public class PedidoDAO {
 		return list;
 	}
 	
-	public void update(Pedido c) throws SQLException {
-		String sql = "update pedido set codfuncionario = " +
-				"'" + c.getCodfuncionario() +"'," +
-				"where data_pedido = '" + c.getData_pedido() + "' and " +
-				"horapedido = '" + c.getHorapedido() + "' and " +
-				"cod_cliente = '" + c.getCod_cliente() + "', ";
+	public List<ModelBuscaPedidos> findByCpf(String cpf) throws SQLException {
+		String sql = "select cliente.nome, orcamento.datapedido, orcamento.horapedido, produto.nomeproduto," +
+				" orcamento.valor from orcamento, cliente, produto, pedido " +
+				"where orcamento.datapedido = pedido.data_pedido and " +
+				"orcamento.horapedido = pedido.horapedido and " +
+				"orcamento.cod_cliente = pedido.cod_cliente and " +
+				"cliente.cod_cliente = pedido.cod_cliente and" +
+				"  orcamento.codproduto = produto.codproduto and" +
+				" cliente.cpf_cnpj='" + cpf + "';";
 		ConnectPostegreSQL.conectar();
-		ConnectPostegreSQL.comando.executeUpdate(sql);
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
+		List<ModelBuscaPedidos> list = new ArrayList<ModelBuscaPedidos>();
+		
+		while (res.next()) {
+			
+			ModelBuscaPedidos p = new ModelBuscaPedidos(res.getString("nome"), res.getString("datapedido"), res.getString("horapedido"),
+					res.getString("nomeproduto"), Double.parseDouble(res.getString("valor")));
+			list.add(p);
+		}
+		return list;
 	}
 	
-	public List<Pedido> show() throws SQLException {
-		String sql = "select * from pedido;";
+	public List<ModelBuscaPedidos> findByData(String data) throws SQLException {
+		String sql = "select cliente.nome, orcamento.datapedido, orcamento.horapedido, produto.nomeproduto," +
+				" orcamento.valor from orcamento, cliente, produto, pedido " +
+				"where orcamento.datapedido = pedido.data_pedido and " +
+				"orcamento.horapedido = pedido.horapedido and " +
+				"orcamento.cod_cliente = pedido.cod_cliente and " +
+				"cliente.cod_cliente = pedido.cod_cliente and" +
+				"  orcamento.codproduto = produto.codproduto and" +
+				" orcamento.datapedido = '" + data + "';";
+		ConnectPostegreSQL.conectar();
+		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
+		List<ModelBuscaPedidos> list = new ArrayList<ModelBuscaPedidos>();
+		
+		while (res.next()) {
+			
+			ModelBuscaPedidos p = new ModelBuscaPedidos(res.getString("nome"), res.getString("datapedido"), res.getString("horapedido"),
+					res.getString("nomeproduto"), Double.parseDouble(res.getString("valor")));
+			list.add(p);
+		}
+		return list;
+	}
+	
+	public List<Pedido> findByDate(String data) throws SQLException {
+		String sql = "select * from pedido where data_pedido = '" + data + "';";
 		ConnectPostegreSQL.conectar();
 		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
 		List<Pedido> list = new ArrayList<Pedido>();

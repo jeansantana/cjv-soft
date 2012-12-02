@@ -1,12 +1,12 @@
 package models;
 
 public class Funcionario {
-	private String codfuncionario;
+	private int codfuncionario;
 	private String login;
 	private String nome;
 	private String senha;
 	
-	public Funcionario(String codfuncionario, String login, String nomefuncionario, String senha) {
+	public Funcionario(int codfuncionario, String login, String nomefuncionario, String senha) {
 		this.setCodfuncionario(codfuncionario);
 		this.setLogin(login);
 		this.setNome(nomefuncionario);
@@ -23,11 +23,11 @@ public class Funcionario {
 
 
 
-	public String getCodfuncionario() {
+	public int getCodfuncionario() {
 		return codfuncionario;
 	}
 
-	public void setCodfuncionario(String codfuncionario) {
+	public void setCodfuncionario(int codfuncionario) {
 		this.codfuncionario = codfuncionario;
 	}
 
