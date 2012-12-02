@@ -1,14 +1,14 @@
 package models;
 
 public class Cliente {
-	private String cod_cliente;
+	private int cod_cliente;
 	private String nome;
 	private String endereco;
 	private String cpf_cnpj;
 	private String telefone;
 	private String tipo;
 	
-	public Cliente(String cod_cliente, String nome, String endereco, String cpf_cnpj, String telefone, String tipo) {
+	public Cliente(int cod_cliente, String nome, String endereco, String cpf_cnpj, String telefone, String tipo) {
 		this.setCod_cliente(cod_cliente);
 		this.setNome(nome);
 		this.setEndereco(endereco);
@@ -69,11 +69,11 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getCod_cliente() {
+	public int getCod_cliente() {
 		return cod_cliente;
 	}
 
-	public void setCod_cliente(String cod_cliente) {
+	public void setCod_cliente(int cod_cliente) {
 		this.cod_cliente = cod_cliente;
 	}
 	

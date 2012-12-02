@@ -8,7 +8,7 @@
 	<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/forms.css'}">
 	<script src="@{'/public/javascripts/jquery.js'}"></script>
 	#{get 'moreStyles' /}
-    <link rel="shortcut icon" type="image/ico" href="@{'/public/images/hexagon.ico'}">
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/hexagon.png'}">
     <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/maskedinput-1.3.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script>
@@ -41,7 +41,7 @@
 				  <li><a href="@{ControllerPedido.realizarPedido}">Realizar Pedido</a></li>
 				  <li><a href="@{ControllerCliente.cadastroCliente}">Cadastrar Cliente</a></li>
 				  <li><a href="@{ControllerPedido.buscarPedidos}">Buscar Pedidos</a></li>
-				  <li><a href="@{Application.criarContaFuncionario}">Cadastrar Conta</a></li>
+				  <li><a href="@{ControllerMaterial.cadastroMaterial}">Cadastro de Material</a></li>
 				  <li><a href="@{Application.gerenciamento}">Gerenciamento</a></li>
 			  </ul>
 			

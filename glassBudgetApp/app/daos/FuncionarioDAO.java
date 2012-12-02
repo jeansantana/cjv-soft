@@ -28,10 +28,10 @@ public class FuncionarioDAO {
 		String sql = "select * from funcionario where login = '" + login + "' and senha = '" + senha + "';";
 		ConnectPostegreSQL.conectar();
 		ResultSet res = ConnectPostegreSQL.comando.executeQuery(sql);
-		Funcionario c = null;
+		Funcionario f = null;
 		if (res.next()) 
-			c = new Funcionario(res.getString("codfuncionario"), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
-		return c;
+			f = new Funcionario(Integer.parseInt(res.getString("codfuncionario")), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
+		return f;
 	}
 	
 	public List<Funcionario> searchForName(String nome) throws SQLException {
@@ -41,8 +41,8 @@ public class FuncionarioDAO {
 		List<Funcionario> list = new ArrayList<Funcionario>();
 		
 		while (res.next()) {
-			Funcionario c = new Funcionario(res.getString("codfuncionario"), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
-			list.add(c);
+			Funcionario f = new Funcionario(Integer.parseInt(res.getString("codfuncionario")), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
+			list.add(f);
 		}
 		return list;
 	}
@@ -64,8 +64,8 @@ public class FuncionarioDAO {
 		List<Funcionario> list = new ArrayList<Funcionario>();
 		
 		while (res.next()) {
-			Funcionario c = new Funcionario(res.getString("codfuncionario"), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
-			list.add(c);
+			Funcionario f = new Funcionario(Integer.parseInt(res.getString("codfuncionario")), res.getString("login"), res.getString("nomefuncionario"), res.getString("senha"));
+			list.add(f);
 		}
 		return list;
 	}

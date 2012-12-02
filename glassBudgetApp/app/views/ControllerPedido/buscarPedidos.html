@@ -1,2 +1,104 @@
 #{extends 'main.html' /}
 #{set title:'Buscar Pedidos' /}
+
+<script>
+	$(document).ready(function() {
+		$("#tipoBusca").click(function() {
+			var idx = document.busca.tipoBusca.selectedIndex;	
+			if (document.busca.tipoBusca.options[idx].text == "Por Cliente") {
+				$("#formBuscaPedidoPorData").hide();
+				$("#formBuscaPedidoPorCliente").show();
+			} else if (document.busca.tipoBusca.options[idx].text == "Por Data") {
+				$("#formBuscaPedidoPorData").show();
+				$("#formBuscaPedidoPorCliente").hide();
+			} else {
+				$("#formBuscaPedidoPorData").show();
+				$("#formBuscaPedidoPorCliente").show();
+			}
+		});
+	});
+	
+	$(document).ready(function() {
+		$("#tipo").click(function() {
+			var idx = document.formBuscaPedidoPorCliente.tipo.selectedIndex;
+			if (document.formBuscaPedidoPorCliente.tipo.options[idx].text == "Pessoa Física") {
+				$("#ident").text("CPF: ");
+			 	$("#cpfcnpj").mask("999.999.999-99");  
+			} else if (document.formBuscaPedidoPorCliente.tipo.options[idx].text == "Pessoa Jurídica") {
+				$("#ident").text("CNPJ: ");
+				$("#cpfcnpj").mask("99.999.999/9999-99");  
+			} else {
+				$("#ident").text("CPF/CNPJ: ");
+			}
+		});
+	});
+
+	jQuery(function($) {
+		$("#data").mask("99/99/9999");
+	});
+</script>
+
+<form id="busca" name="busca">	
+	<table class="form">
+		<tr>
+		<th>Forma de Busca: </th>
+			<td>
+				<select name="tipoBusca" id="tipoBusca" value="${flash.tipo}">
+					<option>Selecione</option>
+					<option>Por Data</option>
+					<option>Por Cliente</option>
+				</select>
+		
+			</td>
+		</tr>
+	</table>
+</form>
+
+<form id="formBuscaPedidoPorData" name="formBuscaPedidoPorData" action="@{ControllerPedido.listarPedidos()}" method="GET">
+	
+	<table class="form">		
+		<tr>
+			<th>Data do Pedido: </th>
+			<td><input id="data" class="data" name="data"/></td>
+			<td class="submit-button-right" colspan="2">
+				<input class="submit-text" type="submit" value="Buscar"/>
+			</td>
+		</tr>
+		
+	</table>
+</form>
+
+<form id="formBuscaPedidoPorCliente" name="formBuscaPedidoPorCliente" action="@{ControllerPedido.listarPedidos()}" method="GET">
+	
+		<table class="form">
+			<tr>
+				<th>Tipo: </th>
+				<td>
+					<select name="tipo" id="tipo" value="${flash.tipo}">
+						<option>Selecione</option>
+						<option>Pessoa Física</option>
+						<option>Pessoa Jurídica</option>
+					</select>
+				
+				</td>
+			</tr>
+		</table>
+	
+	<table class="form">
+		<tr>
+			<th id="ident">CPF/CNPJ:</th>
+			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj" type="text" size="30"/>
+				<!-- <a href="#""><img type="submit" class="imgBusca" src="@{'/public/images/buscar.png'}"></a>-->
+				<input id="busca" class="submit-text" type="submit" value="Busca" />
+				
+				#{ifErrors} 
+					#{errors}
+						<span style="color: red">${error}</span>
+						<br>
+					#{/errors} 
+				#{/ifErrors}	
+			</td>
+		</tr>
+		
+	</table>
+</form>

@@ -27,6 +27,15 @@ table.form input.end-cidade {
   color: #000000; 
 }
 
+table.form input.data { 
+  width: 80px;
+  height: 20px;
+  border: 1px solid #c8e152;
+  padding: 3px;
+  background-color: #FFFFFF; 
+  color: #000000; 
+}
+
 table.form input.logra { 
   width: 433px;
   height: 20px;

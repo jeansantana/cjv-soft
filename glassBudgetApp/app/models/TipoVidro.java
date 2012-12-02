@@ -11,7 +11,6 @@ public class TipoVidro {
 	
 	public TipoVidro(String nome, double espessura, double preco,
 			String descricao) {
-		super();
 		this.nome = nome;
 		this.espessura = espessura;
 		this.preco = preco;

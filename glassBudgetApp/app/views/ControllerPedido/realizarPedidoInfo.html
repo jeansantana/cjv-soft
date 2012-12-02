@@ -32,9 +32,14 @@
 		document.getElementById("total").innerHTML = "<h3><b>Total a pagar: </b>"
 				+ formataMoeda(precoTotal, 2, '.', ',', 'R$') + "</h3>";
 	}
+	
+	function exibirTelaConfirma() {
+	    window.open("@{ControllerPedido.confirmarPedido()}", "_top");
+  	}
+	
 </script>
 
-<form name="formPedido" action="" method="GET">
+<form name="formPedido" action="@{ControllerPedido.fazerPedido()}" method="GET">
 	<table class="form">
 		<tr>
 			<th></th>
@@ -54,8 +59,8 @@
 		</th>
 		<tr>
 			<th>Nome:</th>
-			<td><input class="inp-text" name="cpfcnpj" id="cpfcnj"
-				type="text" size="30" maxlength="14" /></td>
+			<td><input class="inp-text" name="nomeProd" id="nomeProd"
+				type="text" size="30" /></td>
 		</tr>
 
 		<th>
@@ -85,8 +90,7 @@
 		</th>
 		<tr>
 			<td class="submit-button-right" colspan="2"><br> <br>
-				<input class="submit-text" type="submit" value="Realizar Pedido" />
-				<input class="submit-text" type="submit" value="Comfirmar Pedido" /></td>
+				<input type="submit" class="submit-text" onclick="exibirTelaConfirma()" value="Realizar Pedido" />
 		</tr>
 	</table>
 </form>

@@ -1,0 +1,76 @@
+#{extends 'main.html' /}
+#{set title:'Confirmar Pedido' /}
+
+<script>
+	function formataMoeda(numero, casasDecimais, separadorDecimal,
+			separadorMilhar, unidadeMoeda) {
+		casasDecimais = isNaN(casasDecimais = Math.abs(casasDecimais)) ? 2
+				: casasDecimais;
+		separadorDecimal = separadorDecimal == undefined ? ","
+				: separadorDecimal;
+		separadorMilhar = separadorMilhar == undefined ? "." : separadorMilhar;
+		unidadeMoeda = unidadeMoeda == undefined ? "" : unidadeMoeda + " ";
+		var sinal = numero < 0 ? "-" : "";
+		var parteInteira = parseInt(numero = Math.abs(+numero || 0).toFixed(
+				casasDecimais))
+				+ "";
+
+		var j = (j = parteInteira.length) > 3 ? j % 3 : 0;
+		return unidadeMoeda
+				+ sinal
+				+ (j ? parteInteira.substr(0, j) + separadorMilhar : "")
+				+ parteInteira.substr(j).replace(/(\d{3})(?=\d)/g,
+						"$1" + separadorMilhar)
+				+ (casasDecimais ? separadorDecimal
+						+ Math.abs(numero - parteInteira)
+								.toFixed(casasDecimais).slice(2) : "");
+	}	
+	
+	function gravarPedido() {
+		window.open("@{ControllerPedido.confirmarcaoPedido()}", "_top");
+	}
+	
+	function back() {
+		window.open("@{ControllerPedido.realizarPedidoInfo()}", "_top");
+	}
+	
+</script>
+
+<style type="text/css">
+	#titulo {
+		color:black;
+		font-size: 25px;
+	}
+	#titulodeinfo {
+		color:black;
+		font-size: 20px;
+	}
+	#neutro {
+		line-height: 150%;
+		font-size: 20px;
+	}
+</style>
+<br>
+
+<p id="titulo">Segue abaixo as informações fornecidas. Você confirma a solicitação do pedido?</p>
+<br>
+<span id="neutro">
+	<span id="titulodeinfo">Cliente: </span> ${cl.getNome()}
+	<br>
+	<span id="titulodeinfo">Produto: </span> ${produto.getNomeproduto()} 
+	<br>
+	<span id="titulodeinfo"> Dimensões: </span> ${produto.getAltura()} x ${produto.getLargura()}
+	<br>
+	<span id="titulodeinfo"> Tipo de Vidro escolhido para confecção do produto: </span> ${tipoVidro.getDescricao()} 
+	<br>
+	<script>
+		document.write("<span id=\"titulodeinfo\">Preço Total:</span> " + formataMoeda(${orcamento.getValor()}, 2, ',', '.', 'R$'));
+	</script>
+</span>
+<table class="form">
+	<tr>
+		<td><input type="submit" class="submit-text" onclick="back()" value="Voltar" /></td>
+		<td><input type="submit" class="submit-text" onclick="gravarPedido()" value="Confirmar Pedido" /></td>
+	</tr>
+</table>
+<br>

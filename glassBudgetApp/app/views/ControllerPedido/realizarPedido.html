@@ -27,11 +27,27 @@
 	function exibirPreco(t) {
 		var precoTotal = parseFloat(document.formPedido.altura.value)
 				* parseFloat(document.formPedido.largura.value) * parseFloat(t);
-		document.getElementById("getPreco").innerHTML = "<b>Preço por m²:</b>"
 				+ formataMoeda(t, 2, '.', ',', 'R$');
+		document.getElementById("getPreco").innerHTML = "<b>Preço por m²:</b>"
 		document.getElementById("total").innerHTML = "<h3><b>Total a pagar: </b>"
 				+ formataMoeda(precoTotal, 2, ',', '.', 'R$') + "</h3>";
-	}	
+	}
+	
+	$(document).ready(function() {
+		$("#tipo").click(function() {
+			var idx = document.formInfoCliente.tipo.selectedIndex;
+			if (document.formInfoCliente.tipo.options[idx].text == "Pessoa Física") {
+				$("#ident").text("CPF: ");
+			 	$("#cpfcnpj").mask("999.999.999-99");  
+			} else if (document.formInfoCliente.tipo.options[idx].text == "Pessoa Jurídica") {
+				$("#ident").text("CNPJ: ");
+				$("#cpfcnpj").mask("99.999.999/9999-99");  
+			} else {
+				$("#ident").text("CPF/CNPJ: ");
+			}
+		});
+	});
+	
 </script>
 
 <form name="formInfoCliente" action="@{ControllerCliente.buscarCliente}" method="GET">
@@ -42,9 +58,20 @@
 		</th>
 		
 		<tr>
-			<th>CPF/CNPJ:</th>
-			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj"
-				type="text" size="30" maxlength="14" />
+			<th>Tipo: </th>
+			<td>
+				<select name="tipo" id="tipo" value="${flash.tipo}">
+					<option>Selecione</option>
+					<option>Pessoa Física</option>
+					<option>Pessoa Jurídica</option>
+				</select>
+			
+			</td>
+		</tr>
+		
+		<tr>
+			<th id="ident">CPF/CNPJ:</th>
+			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj" type="text" size="30"/>
 				<!-- <a href="#""><img type="submit" class="imgBusca" src="@{'/public/images/buscar.png'}"></a>-->
 				<input id="busca" class="submit-text" type="submit" value="Busca" />
 				
@@ -65,8 +92,8 @@
 		</th>
 		<tr>
 			<th>Nome:</th>
-			<td><input class="inp-text" name="cpfcnpj" id="cpfcnj"
-				type="text" size="30" maxlength="14" /></td>
+			<td><input class="inp-text" name="nomeProd" id="nomeProd"
+				type="text" size="30"/></td>
 		</tr>
 
 		<th>
@@ -102,7 +129,6 @@
 		<tr>
 			<td class="submit-button-right" colspan="2"><br> <br>
 				<input class="submit-text" type="submit" value="Realizar Pedido" />
-				<input class="submit-text" type="submit" value="Comfirmar Pedido" /></td>
 		</tr>
 	</table>
 </form>
