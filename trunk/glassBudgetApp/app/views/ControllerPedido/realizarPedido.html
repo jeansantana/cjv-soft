@@ -113,11 +113,14 @@
 		
 		<tr>
 			<th>Tipo de material:</th>
-			<td><select name="lstMateriais" id="lstMateriais">
-					#{list items: list, as: 't'}
-					<option onclick="exibirPreco('${t.getPreco()}')">${t.getNome()}</option>
-					#{/list}
-			</select> <span id="getPreco"></span></td>
+			<td>
+				<select name="lstMateriais" id="lstMateriais">
+						#{list items: list, as: 't'}
+						<option onclick="exibirPreco('${t.getPreco()}')">${t.getNome()}</option>
+						#{/list}
+				</select> 
+				<span id="getPreco"></span>
+			</td>
 		</tr>
 		
 		<th>

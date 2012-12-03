@@ -1,34 +1,41 @@
 #{extends 'main.html' /} 
 #{set title: 'Cadastrar Material' /}
 
+#{ifErrors} 
+	#{errors}
+		<span style="color: red">${error}</span>
+		<br>
+	#{/errors} 
+#{/ifErrors}
+
 <form id="formTipoDeVidro" name="formTipoDeVidro" action="@{ControllerMaterial.cadastrarMaterial()}" method="GET">
 	
 		<table class="form">
 			<tr>
 				<th>Nome: </th>
 				<td>
-					<input class="inp-text" id="nometipo" name="nometipo" type="text" />
+					<input class="inp-text" id="nometipo" name="nometipo" type="text" value="${flash.nometipo}"/>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>Espessura em mm: </th>
 				<td>
-					<input class="end-uf" id="espessura" name="espessura" type="text" />
+					<input class="end-uf" id="espessura" name="espessura" type="text" value="${flash.espessura}"/>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>Preço por m²: </th>
 				<td>
-					<input class="end-uf" id="preco" name="preco" type="text" />
+					<input class="end-uf" id="preco" name="preco" type="text" value="${flash.preco}"/>
 				</td> 
 			</tr>
 			
 			<tr>
 				<th>Descrição: </th>
 				<td>
-					<textarea class="inp-text" id="desc" name="desc"></textarea>
+					<textarea class="inp-text" id="desc" name="desc" value="${flash.desc}"></textarea>
 				</td> 
 			</tr>
 			

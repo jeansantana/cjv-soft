@@ -38,6 +38,13 @@
 	});
 </script>
 
+#{ifErrors} 
+	#{errors}
+		<span style="color: red">${error}</span>
+		<br>
+	#{/errors} 
+#{/ifErrors}
+
 <form id="busca" name="busca">	
 	<table class="form">
 		<tr>
@@ -89,14 +96,7 @@
 			<th id="ident">CPF/CNPJ:</th>
 			<td><input class="end-cidade" name="cpfcnpj" id="cpfcnpj" type="text" size="30"/>
 				<!-- <a href="#""><img type="submit" class="imgBusca" src="@{'/public/images/buscar.png'}"></a>-->
-				<input id="busca" class="submit-text" type="submit" value="Busca" />
-				
-				#{ifErrors} 
-					#{errors}
-						<span style="color: red">${error}</span>
-						<br>
-					#{/errors} 
-				#{/ifErrors}	
+				<input id="busca" class="submit-text" type="submit" value="Busca" />	
 			</td>
 		</tr>
 		
