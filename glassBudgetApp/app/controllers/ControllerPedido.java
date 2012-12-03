@@ -120,29 +120,43 @@ public class ControllerPedido extends Controller {
 			if (cpfcnpj == null) {
 				System.err.println("Caso 1: Erro");
 			} else if (cpfcnpj.equals("")){
-				System.err.println("Caso 1.1: Erro");
+				validation.required(cpfcnpj).message("Preencha o campo do código do cliente (CPF/CNPJ) para prosseguir com a busca!");
 			} else {
-				PedidoDAO p = new PedidoDAO();
-				pedidos = p.findByCpf(cpfcnpj);
-				System.out.println(pedidos);
+				if (validation.hasErrors()) {
+					params.flash();
+					validation.keep();
+					buscarPedidos();
+				} else {
+					PedidoDAO p = new PedidoDAO();
+					pedidos = p.findByCpf(cpfcnpj);
+				}
 			}
 		} else if (cpfcnpj == null || cpfcnpj.equals("")) {
 			if (data == null) {
 				System.err.println("Caso 2: Erro");
 			} else if (data.equals("")) {
-				System.err.println("Caso 2.1: Erro");				
+				validation.required(data).message("Preencha o campo data do pedido para prosseguir com a busca!");
+			} else if (data.equals("____-__-__" )) {
+				validation.required(data).message("Preencha o campo data do pedido para prosseguir com a busca!");
 			} else {
-				PedidoDAO p = new PedidoDAO();
-				pedidos = p.findByData(Utils.invert(data));
-				System.out.println(pedidos);
+				if (validation.hasErrors()) {
+					params.flash();
+					validation.keep();
+				} else {
+					PedidoDAO p = new PedidoDAO();
+					pedidos = p.findByData(Utils.invert(data));
+				}
 			}
-		} else {
-			//add erros
 		}
+		if(validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			buscarPedidos();
+		} else {
+			List<ModelBuscaPedidos> list = pedidos;
 		
-		List<ModelBuscaPedidos> list = pedidos;
-		
-		listaPedidos();
+			listaPedidos();
+		}
 	}
 	
 	public static void listaPedidos() {
